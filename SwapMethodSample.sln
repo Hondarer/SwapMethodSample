@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwapMethodSample", "SwapMethodSample\SwapMethodSample.csproj", "{78412CB8-AD94-4A8E-866F-F0A9A565DA69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargetLibrary", "TargetLibrary\TargetLibrary.csproj", "{B04096D5-1FF8-4AC3-8F60-DBCB3E2A1D9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SealedLibrary", "TargetLibrary\SealedLibrary.csproj", "{B04096D5-1FF8-4AC3-8F60-DBCB3E2A1D9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

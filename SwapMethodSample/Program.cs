@@ -1,20 +1,44 @@
-﻿using System;
+﻿using SealedLibrary;
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using TargetLibrary;
+
+// NOTE: ngen で最適化された後も、このコードは動作するのか?
 
 namespace SwapMethodSample
 {
     internal class Program
     {
+        /// <summary>
+        /// プログラムのエントリー ポイントを定義します。
+        /// </summary>
+        /// <param name="args">引数。</param>
         static void Main(string[] args)
         {
-            HijackMethod(typeof(TargetClass), "TargetMethod", typeof(Program), nameof(InstanceStringHijacked));
+            SealedClass _sealedInstance = new SealedClass();
+            Console.WriteLine($"Hash of sealedInstance is {_sealedInstance.GetHashCode()}");
 
-            new TargetClass().CallTargetMethod(1234);
+            // 実際に処理が呼び出される前に、対処を行う必要がある。
+            HijackMethod(typeof(SealedClass), "SealedLogic", typeof(Program), nameof(RevisedLogic));
+
+            Console.WriteLine($"{_sealedInstance.ExecuteOperation(1234, "ABCD")}");
 
             Console.ReadLine();
+        }
+
+        /// <summary>
+        /// 内部の処理を置き換えます。
+        /// </summary>
+        /// <param name="target">対象のインスタンス。</param>
+        /// <param name="param1">パラメーター 1。</param>
+        /// <param name="param2">パラメーター 2。</param>
+        /// <returns>処理結果。</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static string RevisedLogic(object target, int param1, string param2)
+        {
+            param1 *= 2;
+            return $"This is RevisedLogic ({target.GetHashCode()}), param1={param1}, param2={param2}";
         }
 
         // https://www.infoq.com/jp/articles/overriding-sealed-methods-c-sharp/
@@ -45,12 +69,6 @@ namespace SwapMethodSample
             //       他に回避策がない場合の、メソッドの実装変更のサンプルとしてのコードである。
             // Pointer is two pointers from the beginning of the method descriptor
             Marshal.WriteIntPtr(sourceMethodDescriptorAddress, IntPtr.Size * 2, targetMethodMachineCodeAddress);
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string InstanceStringHijacked(object target,int param)
-        {
-            return $"Instance string hijacked, param={param}";
         }
     }
 }

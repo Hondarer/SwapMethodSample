@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TargetLibrary\TargetLibrary.csproj">
+    <ProjectReference Include="..\TargetLibrary\SealedLibrary.csproj">
       <Project>{B04096D5-1FF8-4AC3-8F60-DBCB3E2A1D9A}</Project>
-      <Name>TargetLibrary</Name>
+      <Name>SealedLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
